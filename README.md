@@ -2,6 +2,8 @@
 
 A focused cryptocurrency dashboard built with React, TypeScript, and Vite. A graphite-and-mint interface brings together market analytics, historical charts, an editorial reading room, and a personal watchlist.
 
+**Vercel deployment:** see [DEPLOY_VERCEL.md](DEPLOY_VERCEL.md) for the Vercel Functions entry points, environment variables, free Redis configuration, and redeployment steps. The original Cloudflare deployment instructions below remain supported.
+
 **The project has not been deployed.** It starts with explicitly labeled illustrative data and requires no account, API key, or paid service to review locally.
 
 ## Start locally

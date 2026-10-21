@@ -1,10 +1,8 @@
-import { z } from 'zod';
-import { demoChart, demoCoins, demoEnvelope, demoGlobal, demoNews } from '../src/data/demo.ts';
-import { ranges } from '../src/domain.ts';
 import type { Coin } from '../src/domain.ts';
 import { Gateway, WINDOW } from './gateway.ts';
 import type { CacheEntry, GatewayStore } from './gateway.ts';
 import { normalizeChart, normalizeGlobal, normalizeMarkets } from './normalize.ts';
+import { demoResponse, json, parseRoute } from './routes.ts';
 interface Env {
   ASSETS: Fetcher;
   MARKET_GATEWAY?: DurableObjectNamespace;
@@ -13,24 +11,6 @@ interface Env {
   CG_MONTHLY_BUDGET?: string;
   CG_MINUTE_BUDGET?: string;
 }
-const json = (data: unknown, status = 200) =>
-  Response.json(data, {
-    status,
-    headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
-  });
-function parseRoute(url: URL) {
-  if ([...url.searchParams.keys()].some((k) => !['coin', 'days'].includes(k))) return null;
-  if (['/api/markets', '/api/global', '/api/news'].includes(url.pathname))
-    return url.search ? null : { kind: url.pathname.slice(5), coin: '', days: 7 };
-  if (url.pathname !== '/api/chart') return null;
-  const parsed = z
-    .object({
-      coin: z.string().regex(/^[a-z0-9-]{1,100}$/),
-      days: z.coerce.number().refine((n) => (ranges as readonly number[]).includes(n)),
-    })
-    .safeParse(Object.fromEntries(url.searchParams));
-  return parsed.success ? { kind: 'chart', ...parsed.data } : null;
-}
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -38,13 +18,9 @@ export default {
     if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
     const route = parseRoute(url);
     if (!route) return json({ error: 'Unsupported resource' }, 400);
-    if (route.kind === 'news') return json(demoEnvelope(demoNews));
+    if (route.kind === 'news') return demoResponse(route);
     if (env.DATA_MODE !== 'live' || !env.COINGECKO_DEMO_API_KEY || !env.MARKET_GATEWAY) {
-      if (route.kind === 'markets') return json(demoEnvelope(demoCoins));
-      if (route.kind === 'global') return json(demoEnvelope(demoGlobal));
-      if (!demoCoins.some((c) => c.id === route.coin))
-        return json({ error: 'Unsupported asset' }, 400);
-      return json(demoEnvelope(demoChart(route.coin, route.days)));
+      return demoResponse(route);
     }
     try {
       return await env.MARKET_GATEWAY.get(env.MARKET_GATEWAY.idFromName('global-v1')).fetch(

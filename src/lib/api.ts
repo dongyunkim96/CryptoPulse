@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { chartSchema, coinSchema, envelope, globalSchema, articleSchema } from '../domain';
 import type { Range } from '../domain';
-// Both Vite's local demo middleware and the production Worker own /api.
+// Vite's demo middleware, Cloudflare Worker, and Vercel Functions share /api.
 async function request<T extends z.ZodType>(
   path: string,
   schema: T,

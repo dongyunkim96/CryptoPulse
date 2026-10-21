@@ -16,5 +16,5 @@
     "noUnusedParameters": true,
     "types": ["vite/client", "@cloudflare/workers-types", "node"]
   },
-  "include": ["src", "server", "tests", "*.ts"]
+  "include": ["src", "server", "api", "tests", "*.ts"]
 }
