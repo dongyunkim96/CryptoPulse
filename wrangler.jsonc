@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cryptopulse",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"],
+  },
+  "durable_objects": { "bindings": [{ "name": "MARKET_GATEWAY", "class_name": "MarketGateway" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MarketGateway"] }],
+  "vars": { "DATA_MODE": "demo", "CG_MONTHLY_BUDGET": "7500", "CG_MINUTE_BUDGET": "25" },
+  "observability": { "enabled": false },
+}
