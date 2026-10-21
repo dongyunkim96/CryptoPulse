@@ -1,4 +1,4 @@
-import type { Envelope } from '../src/domain.ts';
+import type { Envelope } from '../src/domain.js';
 export type CacheEntry = { data: unknown; fetchedAt: string; expiresAt: number };
 export interface GatewayStore {
   get: (key: string) => CacheEntry | undefined;

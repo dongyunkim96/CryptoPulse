@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { demoChart, demoCoins, demoEnvelope, demoGlobal, demoNews } from '../src/data/demo.ts';
-import { ranges } from '../src/domain.ts';
+import { demoChart, demoCoins, demoEnvelope, demoGlobal, demoNews } from '../src/data/demo.js';
+import { ranges } from '../src/domain.js';
 
 export const json = (data: unknown, status = 200) =>
   Response.json(data, {

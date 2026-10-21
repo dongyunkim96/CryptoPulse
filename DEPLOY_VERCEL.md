@@ -6,6 +6,12 @@
 
 이번 수정으로 `api/markets.ts`, `api/global.ts`, `api/chart.ts`, `api/news.ts`에 Vercel Functions 진입점을 추가했습니다. `vercel.json`은 API 경로를 덮어쓰지 않고 `/markets`, `/news`, `/watchlist`의 직접 방문과 새로고침을 지원합니다. React + Vite 구조를 유지합니다.
 
+### 배포 후 500 오류 수정
+
+후속 배포의 실제 Runtime Logs에서 `ERR_MODULE_NOT_FOUND: /var/task/server/vercel.ts`를 확인했습니다. TypeScript가 JavaScript로 변환된 뒤에도 import가 `.ts`를 가리키던 문제였습니다. 서버/API 모듈의 상대 import를 출력 파일의 `.js` 경로로 변경하고 `rewriteRelativeImportExtensions`도 활성화했습니다.
+
+이제 `npm run build`에는 `build:server`가 포함됩니다. NodeNext 설정으로 서버/API를 `.server-build/`에 실제 컴파일하고, 원본 TypeScript나 Vite resolver를 사용하지 않는 native Node에서 네 API를 불러와 JSON 응답을 확인합니다. 따라서 프런트엔드 빌드/소스 테스트만 통과하고 배포 서버에서 import가 깨지는 회귀를 검사합니다. 이 로컬 검사는 원격 Vercel 재배포 완료를 의미하지는 않습니다.
+
 ## 먼저 데모 데이터로 배포 확인
 
 1. 수정된 파일을 GitHub에 커밋하고 push합니다.

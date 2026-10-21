@@ -1,8 +1,8 @@
-import type { Coin } from '../src/domain.ts';
-import { Gateway, WINDOW } from './gateway.ts';
-import type { CacheEntry, GatewayStore } from './gateway.ts';
-import { normalizeChart, normalizeGlobal, normalizeMarkets } from './normalize.ts';
-import { demoResponse, json, parseRoute } from './routes.ts';
+import type { Coin } from '../src/domain.js';
+import { Gateway, WINDOW } from './gateway.js';
+import type { CacheEntry, GatewayStore } from './gateway.js';
+import { normalizeChart, normalizeGlobal, normalizeMarkets } from './normalize.js';
+import { demoResponse, json, parseRoute } from './routes.js';
 interface Env {
   ASSETS: Fetcher;
   MARKET_GATEWAY?: DurableObjectNamespace;

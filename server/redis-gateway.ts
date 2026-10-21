@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import type { Envelope } from '../src/domain.ts';
-import type { CacheEntry } from './gateway.ts';
+import type { Envelope } from '../src/domain.js';
+import type { CacheEntry } from './gateway.js';
 
 // All decisions run on the Redis primary in one atomic Lua script. A module
 // variable is never used as the shared cache, quota counter, or distributed lock.

@@ -1,4 +1,4 @@
-import type { Article, ChartPoint, Coin, Envelope } from '../domain.ts';
+import type { Article, ChartPoint, Coin, Envelope } from '../domain.js';
 export const DEMO_DATE = '2026-10-20T16:00:00.000Z';
 // Hand-authored illustrative fixtures, not a historical market snapshot.
 const rows: [string, string, string, number, number, number, number, string][] = [

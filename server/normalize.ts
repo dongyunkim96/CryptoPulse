@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Coin } from '../src/domain.ts';
+import type { Coin } from '../src/domain.js';
 const value = z.number().finite().nullable().optional();
 const rawCoin = z.object({
   id: z.string().regex(/^[a-z0-9-]{1,100}$/),

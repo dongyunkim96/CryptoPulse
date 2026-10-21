@@ -1,7 +1,7 @@
-import type { Coin } from '../src/domain.ts';
-import { normalizeChart, normalizeGlobal, normalizeMarkets } from './normalize.ts';
-import { demoResponse, json, parseRoute } from './routes.ts';
-import { createRedisCommands, RedisGateway } from './redis-gateway.ts';
+import type { Coin } from '../src/domain.js';
+import { normalizeChart, normalizeGlobal, normalizeMarkets } from './normalize.js';
+import { demoResponse, json, parseRoute } from './routes.js';
+import { createRedisCommands, RedisGateway } from './redis-gateway.js';
 
 export interface VercelEnvironment {
   DATA_MODE?: string;
